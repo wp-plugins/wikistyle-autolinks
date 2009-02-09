@@ -16,7 +16,7 @@ Autolink WikiStyle is a WordPress plugin that automatically creates link to your
 * Automatic links using Wordpress pages and posts
 * Custom links via the admin interface
 
-eg. If you have a page named ‘Magic Page’, every time you write the word Magic Page in a page or a post, a link to the original page will be created.
+eg. If you have a page named <em>Magic Page</em>, every time you write the word <em>Magic Page</em> in a page or a post, a link to the original page will be created.
 
 This plugin is usefull for SEO to increase deep linking in your blog.
 
@@ -24,6 +24,6 @@ You can see it in action on www.xgear.info blog.
 
 == Installation ==
 
-1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
+1. Upload `wikistyle-autolinks.php` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Use the admin panel to customize your autolinks
