@@ -3,7 +3,7 @@
 Plugin Name: Autolink WikiStyle
 Plugin URI: http://www.xgear.info/software/worpress-autolink-wiki-style
 Description: Adds the ability to create automatic in-post links from your page titles or from a list of manual defined links (<em>eg. If you have a page called 'Magic Page', every time you'll write <strong>Magic Page</strong> in a Post, it'll became a link to that page</em>).
-Version: 0.9
+Version: 1.0
 Author: Marco Piccardo
 Author URI: http://www.xgear.info/
 */
@@ -37,6 +37,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
 /* Changelog - Release Notes
+* v1.0
+- Added an option to exclude Autolink generation to specified pages. 
 * v0.9
 - First Public Version.
 - Added possibility to change the HTML tag wrapping the Autolink.
@@ -78,6 +80,8 @@ function autolinkAddAdminPage() {
 			"autolinkWS_after"	=> $_POST["autolinkWS_after"],
 			"autolinkWS_exclusion"	=> $_POST["autolinkWS_exclusion"],
 			"autolinkWS_exclusions"	=> $_POST["autolinkWS_exclusions"],
+			"autolinkWS_links_exclusion" => $_POST["autolinkWS_links_exclusion"],
+			"autolinkWS_links_exclusions" => $_POST["autolinkWS_links_exclusions"]
 			);
 	
 		update_option("autolinkWS_options", $options);
@@ -130,8 +134,10 @@ function autolinkAddAdminPage() {
             <p><input type="checkbox" name="autolinkWS_links" value="1" <?=autolinkSelectedOption($options["autolinkWS_links"])?> /> Use Blog links to make AutoLinks.<br/><em>Selecting this option will make AutoLink WikiStyle to use your blog links as sourse for generating in-post link.</em></p>
             <p><input type="checkbox" name="autolinkWS_posts" value="1" <?=autolinkSelectedOption($options["autolinkWS_posts"])?> /> Use Blog pages to make AutoLinks.<br/><em>Selecting this option will make AutoLink WikiStyle to use your blog pages as sourse for generating in-post link.</em></p>
         <p><input type="checkbox" name="autolinkWS_static" value="1" <?=autolinkSelectedOption($options["autolinkWS_static"])?> /> Use Custom links to make AutoLinks.<br/><em>Selecting this option will make AutoLink WikiStyle to use your blog links as sourse for generating in-post link.<br/>Set up custom links in the Advanced Congfiguration Panel</em></p>
-        <p><input type="checkbox" name="autolinkWS_exclusion" value="1" <?=autolinkSelectedOption($options["autolinkWS_exclusion"])?> /> Exclude following pages from autolink generation.<br/>
+        <p><input type="checkbox" name="autolinkWS_exclusion" value="1" <?=autolinkSelectedOption($options["autolinkWS_exclusion"])?> /> Don't generate Autolinks in following pages.<br/>
         Comma Separated list of WordPress pages ID: <input type="text" name="autolinkWS_exclusions" value='<?=$options["autolinkWS_exclusions"]?>' /><br/><em>Selecting this option will make AutoLink WikiStyle not to generate autolink in the specified pages.</em><br/><strong>eg.</strong> <em>insert a list of pages like:</em> 12,34,54</p>
+        <p><input type="checkbox" name="autolinkWS_links_exclusions" value="1" <?=autolinkSelectedOption($options["autolinkWS_links_exclusions"])?> /> Excludes following pages to be linked by AutoLinks.<br/>
+        Comma Separated list of WordPress pages ID: <input type="text" name="autolinkWS_links_exclusion" value='<?=$options["autolinkWS_links_exclusion"]?>' /><br/><em>Selecting this option will make AutoLink WikiStyle not to generate autolink to the specified pages.</em><br/><strong>eg.</strong> <em>insert a list of pages like:</em> 12,34,54</p>
 <? if(isset($options["autolinkWS_before"]) and $options["autolinkWS_before"]!='') { $defval1 = stripslashes($options["autolinkWS_before"]); } else { $defval1 = '<a rel="bookmark"'; } ?>
 <? if(isset($options["autolinkWS_after"]) and $options["autolinkWS_after"]!='') { $defval2 = stripslashes($options["autolinkWS_after"]); } else { $defval2 = '</a>"'; } ?>
             <p>Customize HTML tag: <input type="text" name="autolinkWS_before" value='<?=$defval1?>' style="text-align:right" /> 
@@ -300,6 +306,7 @@ function autolinkParsePost($texto) {
 	$options = get_option("autolinkWS_options");
  	$custom_links = get_option("autolinkWS_custom");
 	$exclusions = explode(',',$options['autolinkWS_exclusions']);
+	$links_exclusions = explode(',',$options['autolinkWS_links_exclusions']);
 	$enlaces = array();
 	$i=0;
 
@@ -331,10 +338,12 @@ function autolinkParsePost($texto) {
 			$request = "SELECT ID, post_title FROM $tableposts WHERE post_status = 'publish' and ID<>".$post->ID." ORDER BY post_title";
 			$envios = $wpdb->get_results($request);
 			foreach ($envios as $envio) {
-				$post_title = stripslashes($envio->post_title);
-				$permalink = get_permalink($envio->ID);
-				$enlace = stripslashes($options["autolinkWS_before"]).' href="'.$permalink.'" title="'.$post_title.'">'.$post_title.stripslashes($options["autolinkWS_after"]);
-				$enlaces[$post_title] = $enlace;
+				if(!($options["autolinkWS_links_exclusion"]==1 and in_array($envios->ID,$links_exclusions))) {
+					$post_title = stripslashes($envio->post_title);
+					$permalink = get_permalink($envio->ID);
+					$enlace = stripslashes($options["autolinkWS_before"]).' href="'.$permalink.'" title="'.$post_title.'">'.$post_title.stripslashes($options["autolinkWS_after"]);
+					$enlaces[$post_title] = $enlace;
+				}
 			}
 		}
 	
