@@ -3,7 +3,7 @@
 Plugin Name: Autolink WikiStyle
 Plugin URI: http://www.xgear.info/software/worpress-autolink-wiki-style
 Description: Adds the ability to create automatic in-post links from your page titles or from a list of manual defined links (<em>eg. If you have a page called 'Magic Page', every time you'll write <strong>Magic Page</strong> in a Post, it'll became a link to that page</em>).
-Version: 1.0
+Version: 1.1
 Author: Marco Piccardo
 Author URI: http://www.xgear.info/
 */
@@ -169,7 +169,7 @@ function autolinkAddAdminPage() {
                 var pages = [ <?php
                     if(count($custom_links)>0) {
                         for($i=0; $i<count($custom_links); $i++) {
-                            $v=&$this->_pages[$i];
+                            //$v=&$this->_pages[$i];
                             if($i>0) echo ",";
                             echo '{word:"' . $custom_links[$i]['word'] . '", type:"' . $custom_links[$i]['type'] . '", url:"' . $custom_links[$i]['url'] . '"}';											
                         }

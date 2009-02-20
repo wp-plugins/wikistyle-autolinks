@@ -3,8 +3,8 @@ Contributors: xgear
 Donate link: http://www.xgear.info/
 Tags: seo, links, deep linking, pages, posts
 Requires at least: 2.1
-Tested up to: 2.7
-Stable tag: 1.0
+Tested up to: 2.7.1
+Stable tag: 1.1
 
 Autolink WikiStyle automatically creates link to your posts or pages within other posts and pages. Like Wikipedia, but automatic.
 
