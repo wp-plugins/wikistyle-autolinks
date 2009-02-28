@@ -3,7 +3,7 @@
 Plugin Name: Autolink WikiStyle
 Plugin URI: http://www.xgear.info/software/autolink-wikistyle/
 Description: Adds the ability to create automatic in-post links from your page titles or from a list of manual defined links (<em>eg. If you have a page called 'Magic Page', every time you'll write <strong>Magic Page</strong> in a Post, it'll became a link to that page</em>).
-Version: 1.1
+Version: 1.2
 Author: Marco Piccardo
 Author URI: http://www.xgear.info/
 */
