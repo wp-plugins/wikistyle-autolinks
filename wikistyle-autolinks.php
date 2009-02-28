@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Autolink WikiStyle
-Plugin URI: http://www.xgear.info/software/worpress-autolink-wiki-style
+Plugin URI: http://www.xgear.info/software/autolink-wikistyle/
 Description: Adds the ability to create automatic in-post links from your page titles or from a list of manual defined links (<em>eg. If you have a page called 'Magic Page', every time you'll write <strong>Magic Page</strong> in a Post, it'll became a link to that page</em>).
 Version: 1.1
 Author: Marco Piccardo
@@ -363,13 +363,13 @@ function autolinkParsePost($texto) {
 		}
 	
 		// sustituyo las cadenas buscadas por los permalinks
-	
-		foreach($enlaces as $buscado => $sustituido) {   
-			$texto = ereg_replace($buscado,$sustituido,$texto);
+		if(count($enlaces)>0) {
+			foreach($enlaces as $buscado => $sustituido) {   
+				$texto = str_replace($buscado,$sustituido,$texto);
+			}
 		}
 	
 		// e invierto los tag temporales por los html
-	
 		foreach ($salida[0] as $sal) {     
 			$texto = ereg_replace($sustitucion[--$i],$buscando[$i],$texto);
 		}
