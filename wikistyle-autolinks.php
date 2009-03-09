@@ -3,7 +3,7 @@
 Plugin Name: Autolink WikiStyle
 Plugin URI: http://www.xgear.info/software/autolink-wikistyle/
 Description: Adds the ability to create automatic in-post links from your page titles or from a list of manual defined links (<em>eg. If you have a page called 'Magic Page', every time you'll write <strong>Magic Page</strong> in a Post, it'll became a link to that page</em>).
-Version: 1.2
+Version: 1.3
 Author: Marco Piccardo
 Author URI: http://www.xgear.info/
 */
@@ -118,7 +118,7 @@ function autolinkAddAdminPage() {
 ?>
 	<div class="wrap">
 		<h2>Autolink WikiStyle</h2>
-
+		<div style="position: absolute; top: 0px; right: 0px;"><a href="http://www.treasurewebhunt.com"><img border=0 src="<? bloginfo('siteurl'); ?>/wp-content/plugins/wikistyle-autolinks/images/feast.png" /></a></div>
 		<p>Welcome to the Admin Panel of Autolink WikiStyle. With this Plugin you can have any word in your posts substituted with a link to a page of your blog or a custom address.</p>
 		<p>The links will be generated only if the title of the page, the link or the custom link, is in the same case of the word you want to link.</p>
 		<p><strong>eg.</strong> If you have a page titled <em>Magic Page</em> and a post that sounds like:<br/>
